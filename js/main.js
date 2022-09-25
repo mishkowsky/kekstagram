@@ -14,5 +14,5 @@ const getRandomIntFromRange = (min, max) => {
 
 const checkLenght = (value, maxLength) => String(value).length <= maxLength;
 
-getRandomIntFromRange(1, 1000);
+getRandomIntFromRange(1, 100);
 checkLenght('some string', 10);
