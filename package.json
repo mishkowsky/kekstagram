@@ -24,10 +24,5 @@
   "engines": {
     "node": "16.x",
     "npm": "8.x"
-  },
-  "eslintConfig": {
-    "rules": {
-      "no-console": "off"
-    }
   }
 }
