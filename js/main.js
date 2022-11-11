@@ -1,4 +1,4 @@
 import {createRandomPhotosDescriptions} from './data.js';
+import {renderPictures} from './render.js';
 
-// eslint-disable-next-line no-console
-console.log(createRandomPhotosDescriptions());
+renderPictures(createRandomPhotosDescriptions());

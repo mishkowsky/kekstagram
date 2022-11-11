@@ -15,4 +15,4 @@ const checkLenght = (value, maxLength) => String(value).length <= maxLength;
 
 checkLenght('some string', 10);
 
-export {getRandomIntFromRange};
+export { getRandomIntFromRange };
