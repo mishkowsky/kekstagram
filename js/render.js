@@ -1,3 +1,5 @@
+import { openPictureFullScreen } from './full-screen.js';
+
 const pictureContainer = document.querySelector('.pictures.container');
 const pictureTemplate = document.querySelector('#picture').content;
 
@@ -15,6 +17,14 @@ const renderPictures = (photoDescriptions) => {
     renderPicture(photoDescription, fragment);
   });
   pictureContainer.append(fragment);
+  pictureContainer.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    if (evt.target.parentNode.className === 'picture') {
+      const arr = Array.prototype.slice.call(pictureContainer.querySelectorAll('.picture'));
+      const index = arr.indexOf(evt.target.parentNode);
+      openPictureFullScreen(photoDescriptions[index]);
+    }
+  });
 };
 
-export {renderPictures};
+export { renderPictures };
