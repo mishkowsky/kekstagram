@@ -18,8 +18,8 @@ const renderPictures = (photoDescriptions) => {
   });
   pictureContainer.append(fragment);
   pictureContainer.addEventListener('click', (evt) => {
-    evt.preventDefault();
     if (evt.target.parentNode.className === 'picture') {
+      evt.preventDefault();
       const arr = Array.prototype.slice.call(pictureContainer.querySelectorAll('.picture'));
       const index = arr.indexOf(evt.target.parentNode);
       openPictureFullScreen(photoDescriptions[index]);
