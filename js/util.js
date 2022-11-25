@@ -11,8 +11,8 @@ const getRandomIntFromRange = (min, max) => {
   return Math.floor(Math.random() * (max + 1 - min) + min);
 };
 
-const checkLenght = (value, maxLength) => String(value).length <= maxLength;
+const checkLength = (value, maxLength) => String(value).length <= maxLength;
 
-checkLenght('some string', 10);
+const hasDuplicates = (array) => (new Set(array)).size !== array.length;
 
-export { getRandomIntFromRange };
+export { getRandomIntFromRange, hasDuplicates, checkLength };
