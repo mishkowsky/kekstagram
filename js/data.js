@@ -38,7 +38,7 @@ const DESCRIPTIONS = [
 
 const PHOTOS_DESCRIPTION_COUNT = 25;
 const URL_COUNT = 25;
-const MAX_AMOUNT_OF_COMMENTS = 5;
+const MAX_AMOUNT_OF_COMMENTS = 15;
 const photosIds = Array(PHOTOS_DESCRIPTION_COUNT).fill(false);
 const urlIds = Array(URL_COUNT).fill(false);
 const commentsIds = Array(MAX_AMOUNT_OF_COMMENTS * PHOTOS_DESCRIPTION_COUNT).fill(false);

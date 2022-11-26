@@ -7,10 +7,10 @@ const closeOverlayElement = () => {
   }
   element.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', buttonKeyDownHandler);
+  document.removeEventListener('keydown', escapeKeyDownHandler);
 };
 
-const buttonClickHandler = (evt) => {
+const closeButtonClickHandler = (evt) => {
   evt.preventDefault();
   closeOverlayElement();
 };
@@ -19,7 +19,7 @@ const form = document.querySelector('.img-upload__form');
 const hashtagInput = form.querySelector('.text__hashtags');
 const commentInput = form.querySelector('.text__description');
 
-function buttonKeyDownHandler(evt) {
+function escapeKeyDownHandler(evt) {
   if (evt.key === 'Escape' && evt.target !== hashtagInput && evt.target !== commentInput) {
     evt.preventDefault();
     closeOverlayElement();
@@ -31,8 +31,8 @@ const openOverlayElement = (e, closeButton, actionOnClose) => {
   e.classList.remove('hidden');
   extraAtionOnClose = actionOnClose;
   document.body.classList.add('modal-open');
-  closeButton.addEventListener('click', buttonClickHandler);
-  document.addEventListener('keydown', buttonKeyDownHandler);
+  closeButton.addEventListener('click', closeButtonClickHandler);
+  document.addEventListener('keydown', escapeKeyDownHandler);
 };
 
 export { openOverlayElement, closeOverlayElement };

@@ -1,5 +1,9 @@
 import { openOverlayElement } from './overlay-handler.js';
 
+const COMMENTS_TO_SHOW = 5;
+
+let commentsDescription;
+
 const bigPicture = document.querySelector('.big-picture');
 const imageSource = bigPicture.querySelector('.big-picture__img').querySelector('img');
 const likes = bigPicture.querySelector('.likes-count');
@@ -30,6 +34,27 @@ const createComment = (comment) => {
   return li;
 };
 
+function showNextComments(amount) {
+  const newCommentsDescription = commentsDescription.slice(
+    comments.children.length,
+    comments.children.length + amount,
+  );
+
+  const commentsFragment = document.createDocumentFragment();
+  newCommentsDescription.forEach((comment) => commentsFragment.append(createComment(comment)));
+  comments.appendChild(commentsFragment);
+
+  commentCount.firstChild.textContent = `${comments.children.length  } из  `;
+
+  if (comments.children.length >= commentsDescription.length) {
+    commentsLoader.classList.add('hidden');
+  }
+}
+
+const commentLoadClickHandler = () => {
+  showNextComments(COMMENTS_TO_SHOW);
+};
+
 const openPictureFullScreen = (photoDescription) => {
 
   openOverlayElement(bigPicture, closeButton);
@@ -39,16 +64,18 @@ const openPictureFullScreen = (photoDescription) => {
 
   description.textContent = photoDescription.description;
 
-  commentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  commentCount.querySelector('span').textContent = photoDescription.comments.length;
 
   comments.querySelectorAll('li').forEach((comment) => {
     comment.remove();
   });
 
-  photoDescription.comments.forEach((comment) => {
-    comments.appendChild(createComment(comment));
-  });
+  commentsDescription = photoDescription.comments;
+  if (commentsDescription.length > 5) {
+    commentsLoader.classList.remove('hidden');
+    commentsLoader.addEventListener('click', commentLoadClickHandler);
+  }
+  showNextComments(COMMENTS_TO_SHOW);
 };
 
 export { openPictureFullScreen };
