@@ -1,34 +1,30 @@
+import { resetEffect } from './effects-controller.js';
 import { openOverlayElement } from './overlay-handler.js';
+import { resetScaleController } from './scale-button-controller.js';
 import { checkLength, hasDuplicates } from './util.js';
 
 let hashtagIsCorrect = true;
 let commentIsCorrect = true;
 
-const photoInput = document.querySelector('#upload-file');
-const editForm = document.querySelector('.img-upload__overlay');
-const closeButton = document.querySelector('#upload-cancel');
-
-const resetInputForm = () => {
-  photoInput.value = '';
-};
-
-const openOverlayEditForm = () => {
-  openOverlayElement(editForm, closeButton, resetInputForm);
-};
-
-photoInput.addEventListener('change', () => {
-  openOverlayEditForm();
-});
+const photoInputElement = document.querySelector('#upload-file');
+const editFormElement = document.querySelector('.img-upload__overlay');
+const closeButtonElement = document.querySelector('#upload-cancel');
 
 const MAX_HASHTAG_NUMBERS = 5;
 const MAX_COMMENT_LENGTH = 140;
 
-const form = document.querySelector('.img-upload__form');
-const hashtagInput = form.querySelector('.text__hashtags');
-const commentInput = form.querySelector('.text__description');
-const submitButton = form.querySelector('.img-upload__submit');
+const formElement = document.querySelector('.img-upload__form');
+const hashtagInputElement = formElement.querySelector('.text__hashtags');
+const commentInputElement = formElement.querySelector('.text__description');
+const submitButtonElement = formElement.querySelector('.img-upload__submit');
 
-const pristine = new Pristine(form, {
+const resetInputForm = () => {
+  photoInputElement.value = '';
+};
+
+const closeCondition = (evt) => evt.key === 'Escape' && evt.target !== hashtagInputElement && evt.target !== commentInputElement;
+
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'text--invalid',
   successClass: 'text-valid',
@@ -39,9 +35,9 @@ const pristine = new Pristine(form, {
 
 const controlSubmit = () => {
   if (hashtagIsCorrect && commentIsCorrect) {
-    submitButton.removeAttribute('disabled', 'true');
+    submitButtonElement.removeAttribute('disabled', 'true');
   } else {
-    submitButton.setAttribute('disabled', 'true');
+    submitButtonElement.setAttribute('disabled', 'true');
   }
 };
 
@@ -74,19 +70,30 @@ const checkComment = (value) => {
   return commentIsCorrect;
 };
 
-pristine.addValidator(
-  hashtagInput,
-  chackHashtag,
-  getHashtagErrorMessage
-);
+const initImgUploader = () => {
+  photoInputElement.addEventListener('change', () => {
+    openOverlayElement(editFormElement, closeButtonElement, closeCondition, resetInputForm);
+    resetEffect();
+    resetScaleController();
+  });
 
-pristine.addValidator(
-  commentInput,
-  checkComment,
-  `Превышен лимит на ${MAX_COMMENT_LENGTH} символов`
-);
+  pristine.addValidator(
+    hashtagInputElement,
+    chackHashtag,
+    getHashtagErrorMessage
+  );
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+  pristine.addValidator(
+    commentInputElement,
+    checkComment,
+    `Превышен лимит на ${MAX_COMMENT_LENGTH} символов`
+  );
+
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+  });
+};
+
+
+export { initImgUploader };
