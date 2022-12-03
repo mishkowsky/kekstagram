@@ -4,14 +4,14 @@ const COMMENTS_TO_SHOW = 5;
 
 let commentsDescription;
 
-const bigPicture = document.querySelector('.big-picture');
-const imageSource = bigPicture.querySelector('.big-picture__img').querySelector('img');
-const likes = bigPicture.querySelector('.likes-count');
-const description = bigPicture.querySelector('.social__caption');
-const commentCount = bigPicture.querySelector('.social__comment-count');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-const closeButton = bigPicture.querySelector('.big-picture__cancel');
-const comments = bigPicture.querySelector('.social__comments');
+const bigPictureElement = document.querySelector('.big-picture');
+const imageSourceElement = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
+const likesCountElement = bigPictureElement.querySelector('.likes-count');
+const photoDescriptionElement = bigPictureElement.querySelector('.social__caption');
+const commentCountElement = bigPictureElement.querySelector('.social__comment-count');
+const commentsLoaderElement = bigPictureElement.querySelector('.comments-loader');
+const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
+const commentsElement = bigPictureElement.querySelector('.social__comments');
 
 const createComment = (comment) => {
   const li = document.createElement('li');
@@ -36,18 +36,18 @@ const createComment = (comment) => {
 
 function showNextComments(amount) {
   const newCommentsDescription = commentsDescription.slice(
-    comments.children.length,
-    comments.children.length + amount,
+    commentsElement.children.length,
+    commentsElement.children.length + amount,
   );
 
   const commentsFragment = document.createDocumentFragment();
   newCommentsDescription.forEach((comment) => commentsFragment.append(createComment(comment)));
-  comments.appendChild(commentsFragment);
+  commentsElement.appendChild(commentsFragment);
 
-  commentCount.firstChild.textContent = `${comments.children.length  } из  `;
+  commentCountElement.firstChild.textContent = `${commentsElement.children.length  } из  `;
 
-  if (comments.children.length >= commentsDescription.length) {
-    commentsLoader.classList.add('hidden');
+  if (commentsElement.children.length >= commentsDescription.length) {
+    commentsLoaderElement.classList.add('hidden');
   }
 }
 
@@ -55,25 +55,27 @@ const commentLoadClickHandler = () => {
   showNextComments(COMMENTS_TO_SHOW);
 };
 
+const closeCondition = (evt) => evt.key === 'Escape';
+
 const openPictureFullScreen = (photoDescription) => {
 
-  openOverlayElement(bigPicture, closeButton);
+  openOverlayElement(bigPictureElement, closeButtonElement, closeCondition);
 
-  imageSource.src = photoDescription.url;
-  likes.textContent = photoDescription.likes;
+  imageSourceElement.src = photoDescription.url;
+  likesCountElement.textContent = photoDescription.likes;
 
-  description.textContent = photoDescription.description;
+  photoDescriptionElement.textContent = photoDescription.description;
 
-  commentCount.querySelector('span').textContent = photoDescription.comments.length;
+  commentCountElement.querySelector('span').textContent = photoDescription.comments.length;
 
-  comments.querySelectorAll('li').forEach((comment) => {
+  commentsElement.querySelectorAll('li').forEach((comment) => {
     comment.remove();
   });
 
   commentsDescription = photoDescription.comments;
   if (commentsDescription.length > 5) {
-    commentsLoader.classList.remove('hidden');
-    commentsLoader.addEventListener('click', commentLoadClickHandler);
+    commentsLoaderElement.classList.remove('hidden');
+    commentsLoaderElement.addEventListener('click', commentLoadClickHandler);
   }
   showNextComments(COMMENTS_TO_SHOW);
 };

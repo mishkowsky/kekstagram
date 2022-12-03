@@ -1,6 +1,6 @@
 import { openPictureFullScreen } from './full-screen.js';
 
-const pictureContainer = document.querySelector('.pictures.container');
+const pictureContainerElement = document.querySelector('.pictures.container');
 const pictureTemplate = document.querySelector('#picture').content;
 
 const renderPicture = (description, fragment) => {
@@ -16,11 +16,11 @@ const renderPictures = (photoDescriptions) => {
   photoDescriptions.forEach((photoDescription) => {
     renderPicture(photoDescription, fragment);
   });
-  pictureContainer.append(fragment);
-  pictureContainer.addEventListener('click', (evt) => {
+  pictureContainerElement.append(fragment);
+  pictureContainerElement.addEventListener('click', (evt) => {
     if (evt.target.parentNode.className === 'picture') {
       evt.preventDefault();
-      const arr = Array.prototype.slice.call(pictureContainer.querySelectorAll('.picture'));
+      const arr = Array.prototype.slice.call(pictureContainerElement.querySelectorAll('.picture'));
       const index = arr.indexOf(evt.target.parentNode);
       openPictureFullScreen(photoDescriptions[index]);
     }
