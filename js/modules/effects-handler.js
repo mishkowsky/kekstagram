@@ -1,4 +1,4 @@
-import { getSliderOptions } from './util.js';
+import { getSliderOptions } from '../utils/slider-options.js';
 
 const sliderContainerElement = document.querySelector('.effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
@@ -36,7 +36,7 @@ const setEffect = (effect) => {
   updateSliderOptions(getSliderOptions(effect.toUpperCase()), DEFAULT_START_VALUE, display);
 };
 
-const initEffectsController = () => {
+const initEffectsHandler = () => {
   noUiSlider.create(sliderElement, {
     connect: 'lower',
     range: getSliderOptions('NONE').range,
@@ -56,4 +56,4 @@ const initEffectsController = () => {
 
 const resetEffect = () => setEffect('none');
 
-export { initEffectsController, resetEffect };
+export { initEffectsHandler, resetEffect };

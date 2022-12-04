@@ -1,5 +1,3 @@
-import { openOverlayElement } from './overlay-handler.js';
-
 const COMMENTS_TO_SHOW = 5;
 
 let commentsDescription;
@@ -55,11 +53,30 @@ const commentLoadClickHandler = () => {
   showNextComments(COMMENTS_TO_SHOW);
 };
 
-const closeCondition = (evt) => evt.key === 'Escape';
+const closeOverlayPicture = () => {
+  bigPictureElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', escapeKeyDownHandler);
+};
+
+const closeButtonClickHandler = (evt) => {
+  evt.preventDefault();
+  closeOverlayPicture();
+};
+
+function escapeKeyDownHandler(evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeOverlayPicture();
+  }
+}
 
 const openPictureFullScreen = (photoDescription) => {
 
-  openOverlayElement(bigPictureElement, closeButtonElement, closeCondition);
+  bigPictureElement.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  closeButtonElement.addEventListener('click', closeButtonClickHandler);
+  document.addEventListener('keydown', escapeKeyDownHandler);
 
   imageSourceElement.src = photoDescription.url;
   likesCountElement.textContent = photoDescription.likes;
