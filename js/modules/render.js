@@ -3,18 +3,24 @@ import { openPictureFullScreen } from './full-screen.js';
 const pictureContainerElement = document.querySelector('.pictures.container');
 const pictureTemplate = document.querySelector('#picture').content;
 
-const renderPicture = (description, fragment) => {
+
+const clearPictures = () => {
+  pictureContainerElement.querySelectorAll('.picture').forEach((item) => item.remove());
+};
+
+const renderPicture = (description) => {
   const clone = pictureTemplate.cloneNode(true);
   clone.querySelector('.picture__img').src = description.url;
   clone.querySelector('.picture__likes').textContent = description.likes;
   clone.querySelector('.picture__comments').textContent = description.comments.length;
-  fragment.append(clone);
+  return clone;
 };
 
 const renderPictures = (photoDescriptions) => {
+  clearPictures();
   const fragment = document.createDocumentFragment();
   photoDescriptions.forEach((photoDescription) => {
-    renderPicture(photoDescription, fragment);
+    fragment.append(renderPicture(photoDescription));
   });
   pictureContainerElement.append(fragment);
   pictureContainerElement.addEventListener('click', (evt) => {
@@ -25,6 +31,7 @@ const renderPictures = (photoDescriptions) => {
       openPictureFullScreen(photoDescriptions[index]);
     }
   });
+
 };
 
 export { renderPictures };
