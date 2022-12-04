@@ -1,4 +1,4 @@
-import { between } from './util.js';
+import { between } from '../utils/util.js';
 
 const scaleValueElement = document.querySelector('.scale__control--value');
 const scaleDecreaseButton = document.querySelector('.scale__control--smaller');
@@ -29,11 +29,11 @@ const increaseScaleClickHandler = () => {
   changeScale(DEFAULT_SCALE_STEP);
 };
 
-const resetScaleController = () => setScaleOnImg(100);
+const resetScaleHandler = () => setScaleOnImg(100);
 
-const initScaleController = () => {
+const initScaleHandler = () => {
   scaleDecreaseButton.addEventListener('click', decreaseScaleClickHandler);
   scaleIncreaseButton.addEventListener('click', increaseScaleClickHandler);
 };
 
-export { resetScaleController, initScaleController };
+export { resetScaleHandler, initScaleHandler };

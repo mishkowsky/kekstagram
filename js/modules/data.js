@@ -1,5 +1,5 @@
 
-import {getRandomIntFromRange} from './util.js';
+import {getRandomIntFromRange} from '../utils/util.js';
 
 const NAMES = [
   'Лев',
