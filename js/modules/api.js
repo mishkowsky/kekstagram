@@ -5,7 +5,7 @@ const getData = (onSuccess, onFail) => {
       onSuccess(posts);
     })
     .catch(() => {
-      onFail('Не удалось загрузить данные. Попробуйте перезагрузить страницу');
+      onFail();
     });
 };
 

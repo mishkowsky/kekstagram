@@ -36,6 +36,8 @@ const setEffect = (effect) => {
   updateSliderOptions(getSliderOptions(effect.toUpperCase()), DEFAULT_START_VALUE, display);
 };
 
+const resetEffect = () => setEffect('none');
+
 const initEffectsHandler = () => {
   noUiSlider.create(sliderElement, {
     connect: 'lower',
@@ -52,8 +54,8 @@ const initEffectsHandler = () => {
   effectsListElement.addEventListener('change', (evt) => {
     setEffect(`${evt.target.value}`);
   });
-};
 
-const resetEffect = () => setEffect('none');
+  resetEffect();
+};
 
 export { initEffectsHandler, resetEffect };

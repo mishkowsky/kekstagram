@@ -72,7 +72,6 @@ function escapeKeyDownHandler(evt) {
 }
 
 const openPictureFullScreen = (photoDescription) => {
-
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
   closeButtonElement.addEventListener('click', closeButtonClickHandler);
