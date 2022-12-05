@@ -13,19 +13,19 @@ const openAlert = (type, message, buttonText) => {
   function escCloseKeyHandler(evt) {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      alertClose();
+      alertClose(evt);
     }
   }
 
   function onOutCloseClickHandler(evt) {
     if (evt.target.matches('section')) {
-      evt.preventDefault();
-      alertClose();
+      alertClose(evt);
     }
   }
 
-  function alertClose() {
+  function alertClose(evt) {
     alertElement.remove();
+    evt.preventDefault();
     document.removeEventListener('click', onOutCloseClickHandler);
     document.removeEventListener('keydown', escCloseKeyHandler);
   }

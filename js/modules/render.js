@@ -2,7 +2,7 @@ import { openPictureFullScreen } from './full-screen.js';
 
 const pictureContainerElement = document.querySelector('.pictures.container');
 const pictureTemplate = document.querySelector('#picture').content;
-
+let firstRender = true;
 
 const clearPictures = () => {
   pictureContainerElement.querySelectorAll('.picture').forEach((item) => item.remove());
@@ -16,6 +16,8 @@ const renderPicture = (description) => {
   return clone;
 };
 
+let lastListener;
+
 const renderPictures = (photoDescriptions) => {
   clearPictures();
   const fragment = document.createDocumentFragment();
@@ -23,15 +25,25 @@ const renderPictures = (photoDescriptions) => {
     fragment.append(renderPicture(photoDescription));
   });
   pictureContainerElement.append(fragment);
-  pictureContainerElement.addEventListener('click', (evt) => {
-    if (evt.target.parentNode.className === 'picture') {
-      evt.preventDefault();
-      const arr = Array.prototype.slice.call(pictureContainerElement.querySelectorAll('.picture'));
-      const index = arr.indexOf(evt.target.parentNode);
-      openPictureFullScreen(photoDescriptions[index]);
-    }
-  });
 
+  const arr = Array.prototype.slice.call(pictureContainerElement.querySelectorAll('.picture'));
+
+  function clickOnPictureHandler(evt) {
+    const res = evt.target.closest('.picture');
+    if (res !== null) {
+      evt.preventDefault();
+      const index = arr.indexOf(res);
+      if (index !== -1) {
+        openPictureFullScreen(photoDescriptions[index]);
+      }
+    }
+  }
+  if (!firstRender) {
+    pictureContainerElement.removeEventListener('click', lastListener);
+  }
+  firstRender = false;
+  lastListener = clickOnPictureHandler;
+  pictureContainerElement.addEventListener('click', lastListener);
 };
 
 export { renderPictures };
